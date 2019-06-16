@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ExchangeRateCalcX.Views.Calc"
+             Title="Calculation">
+    <ContentPage.Content>
+        <StackLayout>
+            <!--<Label Text="Welcome to Xamarin.Forms!"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />-->
+            <Grid BackgroundColor="#f8f4f1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"></RowDefinition>
+                    <RowDefinition Height="2*"></RowDefinition>
+                    <RowDefinition Height="2*"></RowDefinition>
+                    <RowDefinition Height="2*"></RowDefinition>
+                    <RowDefinition Height="2*"></RowDefinition>
+                    <RowDefinition Height="2*"></RowDefinition>
+                    <RowDefinition Height="2*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Button Text="CUR1" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2"></Button>
+                <Button Text="CUR2" Grid.Column="3" Grid.Row="0" Grid.ColumnSpan="2"></Button>
+
+                <Label Text="{Binding FromAmtValue}" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"></Label>
+                <Label Text="R2" Grid.Column="3" Grid.Row="1" Grid.ColumnSpan="2" x:Name="ToAmt"></Label>
+
+                <Button Text="7" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1"  Clicked="Button_Clicked"></Button>
+                <Button Text="8" Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="1"></Button>
+                <Button Text="9" Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="1"></Button>
+                <Button Text="C" Grid.Column="4" Grid.Row="2" Grid.ColumnSpan="1" Grid.RowSpan="2"></Button>
+
+                <Button Text="4" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1"></Button>
+                <Button Text="5" Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="1"></Button>
+                <Button Text="6" Grid.Column="3" Grid.Row="3" Grid.ColumnSpan="1"></Button>
+
+                <Button Text="1" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="1"></Button>
+                <Button Text="2" Grid.Column="2" Grid.Row="4" Grid.ColumnSpan="1"></Button>
+                <Button Text="3" Grid.Column="3" Grid.Row="4" Grid.ColumnSpan="1"></Button>
+                <Button Text="=" Grid.Column="4" Grid.Row="4" Grid.ColumnSpan="1" Grid.RowSpan="2"></Button>
+
+                <Button Text="S1" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="1"></Button>
+                <Button Text="0" Grid.Column="2" Grid.Row="5" Grid.ColumnSpan="1"></Button>
+                <Button Text="S2" Grid.Column="3" Grid.Row="5" Grid.ColumnSpan="1"></Button>
+
+                <Button Text="1" Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="4"></Button>
+
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
