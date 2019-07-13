@@ -3,6 +3,50 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ExchangeRateCalcX.App">
     <Application.Resources>
+        <ResourceDictionary>
+            <Style x:Key="WhiteFont" TargetType="Label">
+                <Setter Property="TextColor" Value="#ffffff"></Setter>
+            </Style>
+            <Style x:Key="DarkGreenBackground" TargetType="Label" BasedOn="{StaticResource WhiteFont}">
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"></Setter>
+                <Setter Property="VerticalOptions" Value="FillAndExpand"></Setter>
+                <Setter Property="HorizontalTextAlignment" Value="End"></Setter>
+                <Setter Property="BackgroundColor" Value="#008300"></Setter>
+            </Style>
+            <Style x:Key="LightGrayBackground" TargetType="Button">
+                <Setter Property="HorizontalOptions" Value="Center"></Setter>
+                <Setter Property="VerticalOptions" Value="Start"></Setter>
+                <Setter Property="BackgroundColor" Value="#CCD1CC"></Setter>
+            </Style>
+            <Style x:Key="OrangeBackground" TargetType="Button">
+                <Setter Property="HorizontalOptions" Value="Center"></Setter>
+                <Setter Property="VerticalOptions" Value="FillAndExpand"></Setter>
+                <Setter Property="BackgroundColor" Value="#f18230"></Setter>
+            </Style>
+            <Style x:Key="LightGreenBackground" TargetType="Button">
+                <Setter Property="HorizontalOptions" Value="Center"></Setter>
+                <Setter Property="VerticalOptions" Value="FillAndExpand"></Setter>
+                <Setter Property="BackgroundColor" Value="#2fc42f"></Setter>
+            </Style>
+            <Style x:Key="BlackBackground" TargetType="Button">
+                <Setter Property="HorizontalOptions" Value="Center"></Setter>
+                <Setter Property="VerticalOptions" Value="Start"></Setter>
+                <Setter Property="BackgroundColor" Value="#000000"></Setter>
+                <Setter Property="TextColor" Value="#ffffff"></Setter>
+            </Style>
+            <Style x:Key="WhiteBackground" TargetType="Grid">
+                <Setter Property="HorizontalOptions" Value="Center"></Setter>
+                <Setter Property="VerticalOptions" Value="Start"></Setter>
+                <Setter Property="BackgroundColor" Value="#ffffff"></Setter>
+            </Style>
+            <Style x:Key="LightBlueBackground" TargetType="Button">
+                <Setter Property="HorizontalOptions" Value="Center"></Setter>
+                <Setter Property="VerticalOptions" Value="Start"></Setter>
+                <Setter Property="BackgroundColor" Value="#ffffff"></Setter>
+            </Style>
+            
 
+           
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

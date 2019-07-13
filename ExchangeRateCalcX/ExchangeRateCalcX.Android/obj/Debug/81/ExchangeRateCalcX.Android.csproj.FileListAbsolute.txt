@@ -55,6 +55,7 @@ D:\Practice\Xamarin\ExchangeRateCalcX\ExchangeRateCalcX\ExchangeRateCalcX.Androi
 D:\Practice\Xamarin\ExchangeRateCalcX\ExchangeRateCalcX\ExchangeRateCalcX.Android\bin\Debug\System.ServiceModel.Internals.pdb
 D:\Practice\Xamarin\ExchangeRateCalcX\ExchangeRateCalcX\ExchangeRateCalcX.Android\bin\Debug\System.Web.Services.pdb
 D:\Practice\Xamarin\ExchangeRateCalcX\ExchangeRateCalcX\ExchangeRateCalcX.Android\bin\Debug\Mono.Security.pdb
+D:\Practice\Xamarin\ExchangeRateCalcX\ExchangeRateCalcX\ExchangeRateCalcX.Android\bin\Debug\ExchangeRateCalcX.dll.mdb
 D:\Practice\Xamarin\ExchangeRateCalcX\ExchangeRateCalcX\ExchangeRateCalcX.Android\obj\Debug\81\linksrc\ExchangeRateCalcX.Android.pdb
 D:\Practice\Xamarin\ExchangeRateCalcX\ExchangeRateCalcX\ExchangeRateCalcX.Android\obj\Debug\81\linksrc\FormsViewGroup.pdb
 D:\Practice\Xamarin\ExchangeRateCalcX\ExchangeRateCalcX\ExchangeRateCalcX.Android\obj\Debug\81\linksrc\Mono.Android.pdb
@@ -77,7 +78,6 @@ D:\Practice\Xamarin\ExchangeRateCalcX\ExchangeRateCalcX\ExchangeRateCalcX.Androi
 D:\Practice\Xamarin\ExchangeRateCalcX\ExchangeRateCalcX\ExchangeRateCalcX.Android\obj\Debug\81\linksrc\System.ServiceModel.Internals.pdb
 D:\Practice\Xamarin\ExchangeRateCalcX\ExchangeRateCalcX\ExchangeRateCalcX.Android\obj\Debug\81\linksrc\System.Web.Services.pdb
 D:\Practice\Xamarin\ExchangeRateCalcX\ExchangeRateCalcX\ExchangeRateCalcX.Android\obj\Debug\81\linksrc\Mono.Security.pdb
-D:\Practice\Xamarin\ExchangeRateCalcX\ExchangeRateCalcX\ExchangeRateCalcX.Android\bin\Debug\ExchangeRateCalcX.dll.mdb
 D:\Practice\Xamarin\ExchangeRateCalcX\ExchangeRateCalcX\ExchangeRateCalcX.Android\obj\Debug\81\linksrc\ExchangeRateCalcX.dll.mdb
 D:\Practice\Xamarin\ExchangeRateCalcX\ExchangeRateCalcX\ExchangeRateCalcX.Android\obj\Debug\81\android\assets\ExchangeRateCalcX.dll.mdb
 D:\Practice\Xamarin\ExchangeRateCalcX\ExchangeRateCalcX\ExchangeRateCalcX.Android\obj\Debug\81\android\assets\ExchangeRateCalcX.Android.pdb

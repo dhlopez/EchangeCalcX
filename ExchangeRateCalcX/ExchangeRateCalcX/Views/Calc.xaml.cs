@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExchangeRateCalcX.API;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -16,6 +17,10 @@ namespace ExchangeRateCalcX.Views
 	{
         decimal toAmt = 0;
         string fromAmtValue = "";
+        APIService apiService;
+        Rootobject rate;
+        DatabaseManager db;
+        RateBreakdown rateBreakdown;
 
         public string FromCur { get; set; }
         public string ToCur { get; set; }
@@ -34,6 +39,14 @@ namespace ExchangeRateCalcX.Views
             BindingContext = this;
 		}
 
+        protected override async void OnAppearing()
+        {
+            apiService = new APIService();
+            db = new DatabaseManager();
+            rateBreakdown = new RateBreakdown();
+            
+        }
+
         private void Button_Clicked(object sender, EventArgs e)
         {
             var button = (Button)sender;
@@ -49,6 +62,28 @@ namespace ExchangeRateCalcX.Views
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")  
         {  
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        } 
+        }
+
+        private void Clear_Clicked(object sender, EventArgs e)
+        {
+            FromAmtValue = "";
+        }
+
+        private async void Insert_Clicked(object sender, EventArgs e)
+        {
+            Rootobject task = await apiService.GetRate();
+            //task.Wait();
+            rate = task;
+
+            //call breakdown before inserting
+            rateBreakdown.InsertPrimary(db, rate);
+            rateBreakdown.InsertSecondary(db, rate);
+        }
+
+        private void Select_Clicked(object sender, EventArgs e)
+        {
+            DatabaseManager db = new DatabaseManager();
+            List<tblExchangeRates> rates = db.GetAllRates();
+        }
     }
 }
