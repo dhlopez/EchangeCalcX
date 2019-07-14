@@ -20,37 +20,32 @@ namespace ExchangeRateCalcX.Views
 
         public RateBreakdown GetRateValues(Rootobject rate)
         {
-            //this.strRateFrom = rate.results.from_to.fr;
-            //this.strRateTo = rate.results.from_to.to;
-            //this.curValue = rate.results.from_to.val;
-
-            //this.strRateFromSecondary = rate.results.to_from.fr;
-            //this.strRateToSecondary = rate.results.to_from.to;
-            //this.curValueSecondary = rate.results.to_from.val;
-
             return this;
         }
-        public int InsertPrimary(DatabaseManager dbConnection, Rootobject rate)
+        public void InsertRate(DatabaseManager dbConnection, Rootobject rate)
         {
-            tblExchangeRates primaryRate = new tblExchangeRates();
             foreach (var currencyRate in rate.results.currencyList)
             {
                 var key = currencyRate.Key;
-                var item = JsonConvert.DeserializeObject<Rate>(currencyRate.Value.ToString()); 
-                 
+                var item = JsonConvert.DeserializeObject<Rate>(currencyRate.Value.ToString());
+
+
+                tblExchangeRates newRate = new tblExchangeRates();
+                newRate.ID = null;
+                newRate.strRateFrom = item.fr;
+                newRate.curRateFrom = item.val;
+                newRate.strRateTo = item.to;
+                newRate.curRateTo = 0;
+                newRate.dtInserted = DateTime.Now.ToString();
+                newRate.dtLastRevised = DateTime.Now.ToString();
+                newRate.IsFavorite = 0;
+                dbConnection.InsertRate(newRate);
+                //TODO try catch instead of returning
             }
-            //primaryRate.strRateFrom = rate.results.from_to.fr;
-            //primaryRate.curRateFrom = rate.results.from_to.val;
-            //primaryRate.strRateTo = rate.results.from_to.to;
-            //primaryRate.curRateTo = 0;
-            //primaryRate.dtInserted = DateTime.Now.ToString();
-            //primaryRate.dtLastRevised = DateTime.Now.ToString();
-            //primaryRate.IsFavorite = 0;
-            return dbConnection.InsertRate(primaryRate);
         }
-        public int InsertSecondary(DatabaseManager dbConnection, Rootobject rate)
-        {
-            tblExchangeRates secondaryRate = new tblExchangeRates();
+        //public int InsertSecondary(DatabaseManager dbConnection, Rootobject rate)
+        //{
+        //    tblExchangeRates secondaryRate = new tblExchangeRates();
             //secondaryRate.strRateFrom = rate.results.to_from.fr;
             //secondaryRate.curRateFrom = rate.results.to_from.val;
             //secondaryRate.strRateTo = rate.results.to_from.to;
@@ -58,7 +53,7 @@ namespace ExchangeRateCalcX.Views
             //secondaryRate.dtInserted = DateTime.Now.ToString();
             //secondaryRate.dtLastRevised = DateTime.Now.ToString();
             //secondaryRate.IsFavorite = 0;
-            return dbConnection.InsertRate(secondaryRate);
-        }
+        //    return dbConnection.InsertRate(secondaryRate);
+        //}
     }
 }

@@ -75,9 +75,7 @@ namespace ExchangeRateCalcX.Views
             //task.Wait();
             rate = task;
 
-            //call breakdown before inserting
-            rateBreakdown.InsertPrimary(db, rate);
-            rateBreakdown.InsertSecondary(db, rate);
+            rateBreakdown.InsertRate(db, rate);
         }
 
         private void Select_Clicked(object sender, EventArgs e)

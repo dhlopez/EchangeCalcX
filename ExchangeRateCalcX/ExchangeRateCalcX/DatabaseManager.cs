@@ -3,6 +3,7 @@ using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace ExchangeRateCalcX
@@ -23,6 +24,13 @@ namespace ExchangeRateCalcX
         public int InsertRate(tblExchangeRates newRate)
         {
             return dbConnection.Insert(newRate);            
+        }
+
+        public void Read() {
+	        var query = dbConnection.Table<tblExchangeRates>();
+
+            foreach (var tblExchangeRates in query)
+	            Console.WriteLine("Stock: " + tblExchangeRates.strRateFrom);
         }
     }
 }

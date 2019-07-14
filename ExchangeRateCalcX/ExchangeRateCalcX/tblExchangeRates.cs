@@ -7,7 +7,7 @@ namespace ExchangeRateCalcX
 {
     public class tblExchangeRates
     {
-        public int ID { get; set; }
+        public int? ID { get; set; }
 
         public string strRateFrom { get; set; }
 
