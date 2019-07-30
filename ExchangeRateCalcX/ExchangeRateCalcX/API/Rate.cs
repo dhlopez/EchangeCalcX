@@ -26,7 +26,7 @@ namespace ExchangeRateCalcX.API
         public class Results
         {
             [JsonExtensionData]
-            public IDictionary<string, JToken> currencyList;// = new Dictionary<string, Rate>();
+            public IDictionary<string, JToken> rateList;// = new Dictionary<string, Rate>();
 
             //public FROM_TO from_to { get; set; }
             //public TO_FROM to_from { get; set; }

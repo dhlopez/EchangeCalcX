@@ -11,18 +11,27 @@ namespace ExchangeRateCalcX.API
 {
     public class APIService
     {
-        private const string Url = "https://free.currconv.com/api/v7/convert?q=CAD_MXN,MXN_CAD&apiKey=5f8325b1a91b04d0a655"; //This url is a free public api intended for demos
+        private const string UrlRate = "https://free.currconv.com/api/v7/convert?q=CAD_MXN,MXN_CAD&apiKey=5f8325b1a91b04d0a655"; //This url is a free public api intended for demos
+        private const string UrlCurrencyList = "https://free.currconv.com/api/v7/currencies?apiKey=5f8325b1a91b04d0a655"; //This url is a free public api intended for demos
         private readonly HttpClient _client = new HttpClient(); //Creating a new instance of HttpClient. (Microsoft.Net.Http)
         public Rootobject rate;
-        RateBreakdown currentRateBreakdown;
+        RateModelView currentRateBreakdown;
 
         public async Task<Rootobject> GetRate()
         {
-            string content =  await _client.GetStringAsync(Url);
+            string content =  await _client.GetStringAsync(UrlRate);
 
             var rate = JsonConvert.DeserializeObject<Rootobject>(content);
 
             return rate;
+        }
+
+        public async Task<Rootobject> GetListOfCurrenciesFromAPI()
+        {
+            string content =  await _client.GetStringAsync(UrlRate);
+
+            var currency = JsonConvert.DeserializeObject<Currency.Rootobject>(content);
+            return null;
         }
     }
 }

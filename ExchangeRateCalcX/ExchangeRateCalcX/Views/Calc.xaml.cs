@@ -20,7 +20,7 @@ namespace ExchangeRateCalcX.Views
         APIService apiService;
         Rootobject rate;
         DatabaseManager db;
-        RateBreakdown rateBreakdown;
+        RateModelView rateBreakdown;
 
         public string FromCur { get; set; }
         public string ToCur { get; set; }
@@ -43,7 +43,7 @@ namespace ExchangeRateCalcX.Views
         {
             apiService = new APIService();
             db = new DatabaseManager();
-            rateBreakdown = new RateBreakdown();
+            rateBreakdown = new RateModelView();
             
         }
 
