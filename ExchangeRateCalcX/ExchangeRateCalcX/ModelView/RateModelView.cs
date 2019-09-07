@@ -22,7 +22,7 @@ namespace ExchangeRateCalcX.Views
         {
             return this;
         }
-        public void InsertRate(DatabaseManager dbConnection, Rootobject rate)
+        public void PrepareRateForInsert(Rootobject rate)
         {
             foreach (var currencyRate in rate.results.rateList)
             {
@@ -39,9 +39,17 @@ namespace ExchangeRateCalcX.Views
                 newRate.dtInserted = DateTime.Now.ToString();
                 newRate.dtLastRevised = DateTime.Now.ToString();
                 newRate.IsFavorite = 0;
-                dbConnection.InsertRate(newRate);
+                DatabaseManager.InsertRate(newRate);
                 //TODO try catch instead of returning
             }
+        }
+        public async void GetRateMV(APIService apiService)
+        {
+            Rootobject task = await apiService.GetRate();
+            //task.Wait();
+            Rootobject rate = task;
+
+            PrepareRateForInsert(rate);
         }
     }
 }

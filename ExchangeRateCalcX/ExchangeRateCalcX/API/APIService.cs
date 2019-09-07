@@ -26,12 +26,13 @@ namespace ExchangeRateCalcX.API
             return rate;
         }
 
-        public async Task<Rootobject> GetListOfCurrenciesFromAPI()
+        public async Task<Currency.Rootobject> GetListOfCurrenciesFromAPI()
         {
-            string content =  await _client.GetStringAsync(UrlRate);
+            string content =  await _client.GetStringAsync(UrlCurrencyList);
 
             var currency = JsonConvert.DeserializeObject<Currency.Rootobject>(content);
-            return null;
+
+            return currency;
         }
     }
 }

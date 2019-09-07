@@ -25,8 +25,26 @@
                     <ColumnDefinition Width="2*"></ColumnDefinition>
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Button Text="CUR1" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" Style="{StaticResource BlackBackground}"></Button>
+                <!--<Button Text="CUR1" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" Style="{StaticResource BlackBackground}"></Button>
                 <Button Text="CUR2" Grid.Column="3" Grid.Row="0" Grid.ColumnSpan="2" Style="{StaticResource BlackBackground}"></Button>
+                
+                
+                removed from picker ItemsSource = "{Binding fromCurrencies}"
+                -->
+
+                <Picker x:Name="FromCurrencyPick"
+                    Title="From Currency"
+                    Grid.Column="1" 
+                    Grid.Row="0" 
+                    Grid.ColumnSpan="2"
+                    ItemDisplayBinding="{Binding strCurrencyID}" />
+
+                <Picker x:Name="ToCurrencyPick"
+                    Title="To Currency"
+                    Grid.Column="3" 
+                    Grid.Row="0" 
+                    Grid.ColumnSpan="2"
+                    ItemDisplayBinding="{Binding strCurrencyID}" />
 
                 <Label Text="{Binding FromAmtValue}" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource DarkGreenBackground}"></Label>
                 <Label Text="R2" Grid.Column="3" Grid.Row="1" Grid.ColumnSpan="2" x:Name="ToAmt" Style="{StaticResource DarkGreenBackground}"></Label>

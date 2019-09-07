@@ -2,26 +2,49 @@
 using SQLite;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace ExchangeRateCalcX
 {
-    public class DatabaseManager
+    public static class DatabaseManager
     {
-        SQLiteConnection dbConnection;
-        public DatabaseManager()
+        public static SQLiteConnection dbConnection;
+        static DatabaseManager()
         {
-            dbConnection = DependencyService.Get<IDBInterface>().CreateConnection();
+            if (dbConnection == null)
+            {
+                dbConnection = DependencyService.Get<IDBInterface>().CreateConnection();
+            }
+        }
+
+        public static SQLiteConnection GetConnection()
+        {
+            if (dbConnection == null)
+            {
+                dbConnection = DependencyService.Get<IDBInterface>().CreateConnection();
+            }
+            return dbConnection;
         }
  
-        public List<tblExchangeRates> GetAllRates()
+        public static List<tblExchangeRates> GetAllRates()
         {
             return dbConnection.Query<tblExchangeRates>("Select * From tblExchangeRates");
         }
 
-        public bool VerifyIfRateIsValid(tblExchangeRates newRate) {
+        public static ObservableCollection<tblCurrencies> GetAllCurrencies()
+        {
+            return new ObservableCollection<tblCurrencies>(dbConnection.Query<tblCurrencies>("Select * From tblCurrencies limit 10"));
+        }
+
+        public static List<tblCurrencies> DeleteAllCurrencies()
+        {
+            return dbConnection.Query<tblCurrencies>("Delete from tblCurrencies");
+        }
+
+        public static bool VerifyIfRateIsValid(tblExchangeRates newRate) {
 
             string rateFrom = newRate.strRateFrom;
             string rateTo = newRate.strRateTo;
@@ -33,12 +56,12 @@ namespace ExchangeRateCalcX
             return exists;
         }
 
-        public void InsertCurrency(tblCurrencies newCurrency)
+        public static void InsertCurrency(tblCurrencies newCurrency)
         {
             dbConnection.Insert(newCurrency);
         }
 
-        public void InsertRate(tblExchangeRates newRate)
+        public static void InsertRate(tblExchangeRates newRate)
         {
             if (VerifyIfRateIsValid(newRate))
             {
@@ -50,14 +73,18 @@ namespace ExchangeRateCalcX
             }     
         }
 
-        public void VerifyIfListOfCurrenciesExists()
+        public static bool VerifyIfListOfCurrenciesExists()
         {
+            //Do a select to find if we have a list of rates
+            bool exists = false;
 
-        }
+            Boolean.TryParse(dbConnection.Query<tblCurrencies>("SELECT EXISTS(Select * From tblCurrencies)").ToString(), out exists);
 
-        
+            return exists;
+            
+        }        
 
-        public void Read() {
+        public static void Read() {
 	        var query = dbConnection.Table<tblExchangeRates>();
 
             foreach (var tblExchangeRates in query)

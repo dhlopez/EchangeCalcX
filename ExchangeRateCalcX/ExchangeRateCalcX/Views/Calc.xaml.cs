@@ -1,6 +1,8 @@
 ﻿using ExchangeRateCalcX.API;
+using ExchangeRateCalcX.ModelView;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -19,8 +21,13 @@ namespace ExchangeRateCalcX.Views
         string fromAmtValue = "";
         APIService apiService;
         Rootobject rate;
-        DatabaseManager db;
-        RateModelView rateBreakdown;
+        RateModelView rateModelView;
+        CurrencyModelView currencyModelView;
+
+        public ObservableCollection<tblCurrencies> fromCurrencies { get; set; }
+        public ObservableCollection<tblCurrencies> toCurrencies { get; set; }
+
+        public List<tblCurrencies> listOfCurrencies;
 
         public string FromCur { get; set; }
         public string ToCur { get; set; }
@@ -36,15 +43,28 @@ namespace ExchangeRateCalcX.Views
         public Calc ()
 		{
 			InitializeComponent ();
+            apiService = new APIService();
+            rateModelView = new RateModelView();
+            currencyModelView = new CurrencyModelView();
+            currencyModelView.VerifyAndInsertCurrencies(apiService);
+            //listOfCurrencies = currencyModelView.GetTblCurrencies(); 
             BindingContext = this;
+
+            fromCurrencies = currencyModelView.GetTblCurrencies();
+            toCurrencies = currencyModelView.GetTblCurrencies();
+
+            FromCurrencyPick.ItemsSource = fromCurrencies;
+            ToCurrencyPick.ItemsSource = toCurrencies;
 		}
 
-        protected override async void OnAppearing()
+        protected override void OnAppearing()
         {
-            apiService = new APIService();
-            db = new DatabaseManager();
-            rateBreakdown = new RateModelView();
-            
+            //DatabaseManager.DeleteAllCurrencies();
+            //apiService = new APIService();
+            //rateModelView = new RateModelView();
+            //currencyModelView = new CurrencyModelView();
+            //currencyModelView.VerifyAndInsertCurrencies(apiService);
+            //listOfCurrencies = currencyModelView.GetTblCurrencies(); 
         }
 
         private void Button_Clicked(object sender, EventArgs e)
@@ -69,19 +89,14 @@ namespace ExchangeRateCalcX.Views
             FromAmtValue = "";
         }
 
-        private async void Insert_Clicked(object sender, EventArgs e)
+        private void Insert_Clicked(object sender, EventArgs e)
         {
-            Rootobject task = await apiService.GetRate();
-            //task.Wait();
-            rate = task;
-
-            rateBreakdown.InsertRate(db, rate);
+            rateModelView.GetRateMV(apiService);
         }
 
         private void Select_Clicked(object sender, EventArgs e)
         {
-            DatabaseManager db = new DatabaseManager();
-            List<tblExchangeRates> rates = db.GetAllRates();
+            List<tblExchangeRates> rates = DatabaseManager.GetAllRates();
         }
     }
 }
