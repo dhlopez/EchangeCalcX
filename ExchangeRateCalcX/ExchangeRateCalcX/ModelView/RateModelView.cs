@@ -2,7 +2,9 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using static ExchangeRateCalcX.API.Rootobject;
 
 namespace ExchangeRateCalcX.Views
@@ -22,9 +24,10 @@ namespace ExchangeRateCalcX.Views
         {
             return this;
         }
-        public void PrepareRateForInsert(Rootobject rate)
+
+        public void MapRatesForInsert(Rootobject rates)
         {
-            foreach (var currencyRate in rate.results.rateList)
+            foreach (var currencyRate in rates.results.rateList)
             {
                 var key = currencyRate.Key;
                 var item = JsonConvert.DeserializeObject<Rate>(currencyRate.Value.ToString());
@@ -43,13 +46,31 @@ namespace ExchangeRateCalcX.Views
                 //TODO try catch instead of returning
             }
         }
-        public async void GetRateMV(APIService apiService)
+        public async Task HandleDifferentCurrencySelection(APIService apiService, tblCurrencies selectedFromCurrency, tblCurrencies selectedToCurrency)
         {
-            Rootobject task = await apiService.GetRate();
-            //task.Wait();
-            Rootobject rate = task;
+            Rootobject rate = new Rootobject();
+            if (!(selectedFromCurrency == null) && !(selectedToCurrency == null))
+            {
+                rate = await apiService.GetRate(selectedFromCurrency.strCurrencyID, selectedToCurrency.strCurrencyID);
+                MapRatesForInsert(rate);           
+            }
+            //return rate;
+        }
 
-            PrepareRateForInsert(rate);
+        public tblExchangeRates GetCurrentRateFromDB(tblCurrencies selectedFromCurrency, tblCurrencies selectedToCurrency)
+        {
+            List<tblExchangeRates> retrievedRates = new List<tblExchangeRates>();
+            tblExchangeRates rateToReturn = new tblExchangeRates();
+            if (selectedFromCurrency != null && selectedToCurrency != null)
+            {
+                retrievedRates = DatabaseManager.ReadRate(selectedFromCurrency.strCurrencyID, selectedToCurrency.strCurrencyID);
+            }
+            
+            if (retrievedRates.Count==1)
+            {
+                rateToReturn = retrievedRates.FirstOrDefault(); //(tblExchangeRates) retrievedRates.Where(r => r.strRateFrom.Equals(selectedFromCurrency.strCurrencyID)).FirstOrDefault();
+            }
+            return rateToReturn;
         }
     }
 }

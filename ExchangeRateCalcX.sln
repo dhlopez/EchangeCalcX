@@ -5,7 +5,9 @@ VisualStudioVersion = 15.0.28307.489
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExchangeRateCalcX.Android", "ExchangeRateCalcX\ExchangeRateCalcX.Android\ExchangeRateCalcX.Android.csproj", "{55C90A7B-B32A-4FFB-A7AF-AF733814C4D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExchangeRateCalcX", "ExchangeRateCalcX\ExchangeRateCalcX\ExchangeRateCalcX.csproj", "{5E24BB5E-4DA2-4B58-BD03-A4BCA5E609B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExchangeRateCalcX", "ExchangeRateCalcX\ExchangeRateCalcX\ExchangeRateCalcX.csproj", "{5E24BB5E-4DA2-4B58-BD03-A4BCA5E609B2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExchangeRateCalcXTest", "ExchangeRateCalcXTest\ExchangeRateCalcXTest.csproj", "{2D7F76FB-3583-4790-AF61-8098EC899810}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,6 +27,10 @@ Global
 		{5E24BB5E-4DA2-4B58-BD03-A4BCA5E609B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5E24BB5E-4DA2-4B58-BD03-A4BCA5E609B2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5E24BB5E-4DA2-4B58-BD03-A4BCA5E609B2}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{2D7F76FB-3583-4790-AF61-8098EC899810}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D7F76FB-3583-4790-AF61-8098EC899810}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D7F76FB-3583-4790-AF61-8098EC899810}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D7F76FB-3583-4790-AF61-8098EC899810}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

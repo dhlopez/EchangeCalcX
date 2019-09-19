@@ -19,13 +19,18 @@ namespace ExchangeRateCalcX.Views
 	{
         decimal toAmt = 0;
         string fromAmtValue = "";
+        double currentSelectedRate = 0;
+
         APIService apiService;
-        Rootobject rate;
+        //Rootobject currentRate;
         RateModelView rateModelView;
         CurrencyModelView currencyModelView;
 
         public ObservableCollection<tblCurrencies> fromCurrencies { get; set; }
         public ObservableCollection<tblCurrencies> toCurrencies { get; set; }
+
+        public tblCurrencies selectedFromCurrency { get; set; }
+        public tblCurrencies selectedToCurrency { get; set; }
 
         public List<tblCurrencies> listOfCurrencies;
 
@@ -40,6 +45,15 @@ namespace ExchangeRateCalcX.Views
             }
         }
 
+        public double CurrentSelectedRate
+        {
+            get { return currentSelectedRate; }
+            set {
+                currentSelectedRate = value;
+                NotifyPropertyChanged();
+            }
+        }
+
         public Calc ()
 		{
 			InitializeComponent ();
@@ -47,8 +61,6 @@ namespace ExchangeRateCalcX.Views
             rateModelView = new RateModelView();
             currencyModelView = new CurrencyModelView();
             currencyModelView.VerifyAndInsertCurrencies(apiService);
-            //listOfCurrencies = currencyModelView.GetTblCurrencies(); 
-            BindingContext = this;
 
             fromCurrencies = currencyModelView.GetTblCurrencies();
             toCurrencies = currencyModelView.GetTblCurrencies();
@@ -91,12 +103,41 @@ namespace ExchangeRateCalcX.Views
 
         private void Insert_Clicked(object sender, EventArgs e)
         {
-            rateModelView.GetRateMV(apiService);
+            //rateModelView.GetRateMV(apiService);
         }
 
         private void Select_Clicked(object sender, EventArgs e)
         {
             List<tblExchangeRates> rates = DatabaseManager.GetAllRates();
+        }
+
+        private async void FromCurrencyPick_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            selectedFromCurrency = FromCurrencyPick.SelectedItem as tblCurrencies;
+            await rateModelView.HandleDifferentCurrencySelection(apiService, selectedFromCurrency, selectedToCurrency);
+
+            //if(rateModelView.GetCurrentRateFromDB(selectedFromCurrency, selectedToCurrency).ID > 0)
+            //{
+                CurrentSelectedRate = rateModelView.GetCurrentRateFromDB(selectedFromCurrency, selectedToCurrency).curRateFrom;
+            //}
+        }
+
+        private async void ToCurrencyPick_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            selectedToCurrency = ToCurrencyPick.SelectedItem as tblCurrencies;
+            await rateModelView.HandleDifferentCurrencySelection(apiService, selectedFromCurrency, selectedToCurrency);
+            //if(rateModelView.GetCurrentRateFromDB(selectedFromCurrency, selectedToCurrency).ID > 0)
+            //{
+                CurrentSelectedRate = rateModelView.GetCurrentRateFromDB(selectedFromCurrency, selectedToCurrency).curRateFrom;
+            //}
+        }
+
+        private void Button_Clicked_1(object sender, EventArgs e)
+        {
+            if (CurrentSelectedRate != 0)
+            {
+                DisplayAlert("Alert", currentSelectedRate.ToString(), "OK");
+            }
         }
     }
 }

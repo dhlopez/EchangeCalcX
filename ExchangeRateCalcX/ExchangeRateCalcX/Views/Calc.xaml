@@ -37,6 +37,7 @@
                     Grid.Column="1" 
                     Grid.Row="0" 
                     Grid.ColumnSpan="2"
+                    SelectedIndexChanged="FromCurrencyPick_SelectedIndexChanged"
                     ItemDisplayBinding="{Binding strCurrencyID}" />
 
                 <Picker x:Name="ToCurrencyPick"
@@ -44,6 +45,7 @@
                     Grid.Column="3" 
                     Grid.Row="0" 
                     Grid.ColumnSpan="2"
+                    SelectedIndexChanged="ToCurrencyPick_SelectedIndexChanged"
                     ItemDisplayBinding="{Binding strCurrencyID}" />
 
                 <Label Text="{Binding FromAmtValue}" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource DarkGreenBackground}"></Label>
@@ -67,7 +69,7 @@
                 <Button Text="0" Grid.Column="2" Grid.Row="5" Grid.ColumnSpan="1" Clicked="Button_Clicked"  Style="{StaticResource LightGrayBackground}"></Button>
                 <Button Text="S2" Grid.Column="3" Grid.Row="5" Grid.ColumnSpan="1" Clicked="Select_Clicked"></Button>
 
-                <Button Text="1" Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="4"></Button>
+                <Button Text="1" Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="4" Clicked="Button_Clicked_1"></Button>
 
             </Grid>
         </StackLayout>

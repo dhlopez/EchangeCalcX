@@ -44,16 +44,14 @@ namespace ExchangeRateCalcX
             return dbConnection.Query<tblCurrencies>("Delete from tblCurrencies");
         }
 
-        public static bool VerifyIfRateIsValid(tblExchangeRates newRate) {
+        public static int VerifyRecentRateOnDB(tblExchangeRates newRate) {
 
             string rateFrom = newRate.strRateFrom;
             string rateTo = newRate.strRateTo;
 
-            bool exists = false;
-
-            Boolean.TryParse(dbConnection.Query<tblExchangeRates>("SELECT EXISTS(Select * From tblExchangeRates where strRateFrom = \'" + rateFrom + "\' and strRateTo = \'" + rateTo + "\' and dtInserted < " + DateTime.Now +")").ToString(), out exists);
-
-            return exists;
+            var recentRate = dbConnection.Query<tblExchangeRates>("SELECT EXISTS(Select * From tblExchangeRates where strRateFrom = \'" + rateFrom + "\' and strRateTo = \'" + rateTo + "\' and dtInserted < \'" + DateTime.Now.AddHours(-6) + "\')");
+            
+            return recentRate.Count;
         }
 
         public static void InsertCurrency(tblCurrencies newCurrency)
@@ -63,14 +61,11 @@ namespace ExchangeRateCalcX
 
         public static void InsertRate(tblExchangeRates newRate)
         {
-            if (VerifyIfRateIsValid(newRate))
+            if (VerifyRecentRateOnDB(newRate)==0)
             {
-                //retrieve the last rate (at this point we know the last entry is < 6 hrs old
-            }
-            else
-            {
+                //insert if there is no rate < 6 hrs old
                 dbConnection.Insert(newRate);
-            }     
+            }
         }
 
         public static bool VerifyIfListOfCurrenciesExists()
@@ -83,6 +78,11 @@ namespace ExchangeRateCalcX
             return exists;
             
         }        
+        public static List<tblExchangeRates> ReadRate(string fromCurrency, string toCurrency)
+        {
+            return dbConnection.Query<tblExchangeRates>("Select * From tblExchangeRates where strRateFrom = \'" + fromCurrency + "\' and strRateTo = \'" + toCurrency + "\' ORDER BY dtInserted desc limit 1");
+        }
+
 
         public static void Read() {
 	        var query = dbConnection.Table<tblExchangeRates>();
