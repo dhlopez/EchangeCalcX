@@ -1,74 +1,81 @@
-﻿using ExchangeRateCalcX.API;
+﻿using ExchangeRateCalcX.Model;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static ExchangeRateCalcX.API.Rootobject;
+using static ExchangeRateCalcX.Model.RateToken;
 
 namespace ExchangeRateCalcX.Views
 {
     public class RateModelView
     {
-        //we get both values from 1 request, so save both, ex. MXN to CAN & CAN to MXN
-        public string strRateFrom { get; set; }
-        public string strRateTo { get; set; }
-        public float curValue { get; set; }
-        
-        public string strRateFromSecondary { get; set; }
-        public string strRateToSecondary { get; set; }
-        public float curValueSecondary { get; set; }
-
-        public RateModelView GetRateValues(Rootobject rate)
+        public APIService apiService;
+        public RateModelView GetRateValues(Rate rate)
         {
             return this;
         }
-
-        public void MapRatesForInsert(Rootobject rates)
+        
+        public void MapRatesForInsert(RateToken.Rootobject rates)
         {
             foreach (var currencyRate in rates.results.rateList)
             {
-                var key = currencyRate.Key;
+                
                 var item = JsonConvert.DeserializeObject<Rate>(currencyRate.Value.ToString());
 
-
-                tblExchangeRates newRate = new tblExchangeRates();
-                newRate.ID = null;
-                newRate.strRateFrom = item.fr;
-                newRate.curRateFrom = item.val;
-                newRate.strRateTo = item.to;
-                newRate.curRateTo = 0;
-                newRate.dtInserted = DateTime.Now.ToString();
-                newRate.dtLastRevised = DateTime.Now.ToString();
-                newRate.IsFavorite = 0;
+                Rate newRate = MapApiTokenToRate(item);
                 DatabaseManager.InsertRate(newRate);
-                //TODO try catch instead of returning
             }
         }
-        public async Task HandleDifferentCurrencySelection(APIService apiService, tblCurrencies selectedFromCurrency, tblCurrencies selectedToCurrency)
+
+        public Rate MapApiTokenToRate(Rate rate)
         {
-            Rootobject rate = new Rootobject();
+            Rate newRate = new Rate();
+            newRate.id = null;
+            newRate.from = rate.from;
+            newRate.val = rate.val;
+            newRate.to = rate.to;
+            newRate.dtInserted = DateTime.Now.ToString();
+            newRate.IsFavorite = 0;
+            return newRate;
+        }
+
+        public async Task<Rate> HandleDifferentCurrencySelection(APIService apiService, CurrencyToken.Currency selectedFromCurrency, CurrencyToken.Currency selectedToCurrency)
+        {
+            RateToken.Rootobject rateApi = new RateToken.Rootobject();
+            Rate rate = new Rate();
+            List<Rate> retrievedRates = new List<Rate>();
+            Rate rateToReturn = new Rate();
+
             if (!(selectedFromCurrency == null) && !(selectedToCurrency == null))
             {
-                rate = await apiService.GetRate(selectedFromCurrency.strCurrencyID, selectedToCurrency.strCurrencyID);
-                MapRatesForInsert(rate);           
-            }
-            //return rate;
-        }
+                retrievedRates = DatabaseManager.ReadRate(selectedFromCurrency.id, selectedToCurrency.id);
 
-        public tblExchangeRates GetCurrentRateFromDB(tblCurrencies selectedFromCurrency, tblCurrencies selectedToCurrency)
-        {
-            List<tblExchangeRates> retrievedRates = new List<tblExchangeRates>();
-            tblExchangeRates rateToReturn = new tblExchangeRates();
-            if (selectedFromCurrency != null && selectedToCurrency != null)
-            {
-                retrievedRates = DatabaseManager.ReadRate(selectedFromCurrency.strCurrencyID, selectedToCurrency.strCurrencyID);
-            }
-            
-            if (retrievedRates.Count==1)
-            {
-                rateToReturn = retrievedRates.FirstOrDefault(); //(tblExchangeRates) retrievedRates.Where(r => r.strRateFrom.Equals(selectedFromCurrency.strCurrencyID)).FirstOrDefault();
+                if (retrievedRates.Count == 1)
+                {
+                    rateToReturn = retrievedRates.FirstOrDefault();
+                    if (DateTime.Parse(rateToReturn.dtInserted) >= DateTime.Now.AddHours(-6))
+                    {
+                        return rateToReturn;
+                    }
+                }
+                else
+                {
+                    rateApi = await apiService.GetRate(selectedFromCurrency.id, selectedToCurrency.id);
+
+                    if (rateApi != null)
+                    {
+                        MapRatesForInsert(rateApi);
+                    }
+
+                    rate = JsonConvert.DeserializeObject<RateToken.Rate>(rateApi.results.rateList.Where(r => r.Key == selectedFromCurrency.id + "_" + selectedToCurrency.id).ToString());
+
+                    rateToReturn = MapApiTokenToRate(rate);
+
+                    return rateToReturn;
+                }
+                
             }
             return rateToReturn;
         }

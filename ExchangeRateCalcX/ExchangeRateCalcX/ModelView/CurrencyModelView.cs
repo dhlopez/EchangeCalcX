@@ -1,25 +1,25 @@
-﻿using ExchangeRateCalcX.API;
+﻿using ExchangeRateCalcX.Model;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
-using static ExchangeRateCalcX.API.Currency;
+using static ExchangeRateCalcX.Model.CurrencyToken;
 
 namespace ExchangeRateCalcX.ModelView
 {
     public class CurrencyModelView
     {
         
-        public void PrepareCurrencyForInsert(Currency.Rootobject currency)
+        public void PrepareCurrencyForInsert(Model.CurrencyToken.Rootobject currency)
         {
             foreach (var currencyItem in currency.results.currencyList)
             {
                 //var key = currencyRate.Key;
-                var item = JsonConvert.DeserializeObject<CurrencyItem>(currencyItem.Value.ToString());
-                tblCurrencies newCurrency = new tblCurrencies();
-                newCurrency.strCurrencyID = item.id;
-                newCurrency.strCurrencyDesc = item.currencyName;
+                var item = JsonConvert.DeserializeObject<Currency>(currencyItem.Value.ToString());
+                Currency newCurrency = new Currency();
+                newCurrency.id = item.id;
+                newCurrency.id = item.currencyName;
                 DatabaseManager.InsertCurrency(newCurrency);
                 //TODO try catch instead of returning
             }
@@ -31,7 +31,7 @@ namespace ExchangeRateCalcX.ModelView
 
             if (!exists)
             {
-                Currency.Rootobject currency;
+                CurrencyToken.Rootobject currency;
                 //if no records, get them from the api
                 currency = await apiService.GetListOfCurrenciesFromAPI();
                 PrepareCurrencyForInsert(currency);
@@ -40,7 +40,7 @@ namespace ExchangeRateCalcX.ModelView
             GetTblCurrencies();
         }
 
-        public ObservableCollection<tblCurrencies> GetTblCurrencies()
+        public ObservableCollection<CurrencyToken.Rootobject> GetTblCurrencies()
         {
             return DatabaseManager.GetAllCurrencies();
         }

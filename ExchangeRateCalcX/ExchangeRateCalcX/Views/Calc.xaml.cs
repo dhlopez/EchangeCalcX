@@ -1,5 +1,7 @@
-﻿using ExchangeRateCalcX.API;
+﻿using ExchangeRateCalcX.Model;
+using ExchangeRateCalcX.Model;
 using ExchangeRateCalcX.ModelView;
+using ExchangeRateCalcX.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,6 +13,8 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using static ExchangeRateCalcX.Model.CurrencyToken;
+using static ExchangeRateCalcX.Model.RateToken;
 
 namespace ExchangeRateCalcX.Views
 {
@@ -25,17 +29,16 @@ namespace ExchangeRateCalcX.Views
         //Rootobject currentRate;
         RateModelView rateModelView;
         CurrencyModelView currencyModelView;
+        Rate selectedTblExchangeRates;
 
-        public ObservableCollection<tblCurrencies> fromCurrencies { get; set; }
-        public ObservableCollection<tblCurrencies> toCurrencies { get; set; }
+        public ObservableCollection<CurrencyToken.Rootobject> fromCurrencies { get; set; }
+        public ObservableCollection<CurrencyToken.Rootobject> toCurrencies { get; set; }
 
-        public tblCurrencies selectedFromCurrency { get; set; }
-        public tblCurrencies selectedToCurrency { get; set; }
+        public Currency selectedFromCurrency { get; set; }
+        public Currency selectedToCurrency { get; set; }
 
-        public List<tblCurrencies> listOfCurrencies;
+        public List<Currency> listOfCurrencies;
 
-        public string FromCur { get; set; }
-        public string ToCur { get; set; }
         public string FromAmtValue
         {
             get { return fromAmtValue; }
@@ -82,11 +85,7 @@ namespace ExchangeRateCalcX.Views
         private void Button_Clicked(object sender, EventArgs e)
         {
             var button = (Button)sender;
-            int value = 0;
-
             FromAmtValue = button.Text;
-
-            //int.TryParse(button.Text, out value);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;  
@@ -108,28 +107,20 @@ namespace ExchangeRateCalcX.Views
 
         private void Select_Clicked(object sender, EventArgs e)
         {
-            List<tblExchangeRates> rates = DatabaseManager.GetAllRates();
+            List<Rate> rates = DatabaseManager.GetAllRates();
         }
 
-        private async void FromCurrencyPick_SelectedIndexChanged(object sender, EventArgs e)
+        private async void CurrencyPick_SelectedIndexChanged(object sender, EventArgs e)
         {
-            selectedFromCurrency = FromCurrencyPick.SelectedItem as tblCurrencies;
-            await rateModelView.HandleDifferentCurrencySelection(apiService, selectedFromCurrency, selectedToCurrency);
+            double curFrom = 0;
+            selectedFromCurrency = FromCurrencyPick.SelectedItem as Currency;
+            selectedToCurrency = ToCurrencyPick.SelectedItem as Currency;
+            selectedTblExchangeRates = await rateModelView.HandleDifferentCurrencySelection(apiService, selectedFromCurrency, selectedToCurrency);
+            Double.TryParse(selectedTblExchangeRates.from, out curFrom);
 
-            //if(rateModelView.GetCurrentRateFromDB(selectedFromCurrency, selectedToCurrency).ID > 0)
-            //{
-                CurrentSelectedRate = rateModelView.GetCurrentRateFromDB(selectedFromCurrency, selectedToCurrency).curRateFrom;
-            //}
-        }
+            CurrentSelectedRate = curFrom;
 
-        private async void ToCurrencyPick_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            selectedToCurrency = ToCurrencyPick.SelectedItem as tblCurrencies;
-            await rateModelView.HandleDifferentCurrencySelection(apiService, selectedFromCurrency, selectedToCurrency);
-            //if(rateModelView.GetCurrentRateFromDB(selectedFromCurrency, selectedToCurrency).ID > 0)
-            //{
-                CurrentSelectedRate = rateModelView.GetCurrentRateFromDB(selectedFromCurrency, selectedToCurrency).curRateFrom;
-            //}
+
         }
 
         private void Button_Clicked_1(object sender, EventArgs e)

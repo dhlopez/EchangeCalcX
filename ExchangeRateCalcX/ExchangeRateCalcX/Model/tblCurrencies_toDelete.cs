@@ -1,0 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ExchangeRateCalcX.Model
+{
+    //public class tblCurrencies
+    //{
+    //    public int intCurrencyID { get; set; }
+    //    public string strCurrencyDesc { get; set; }
+    //    public string strCurrencyID { get; set; }
+
+    //}
+}

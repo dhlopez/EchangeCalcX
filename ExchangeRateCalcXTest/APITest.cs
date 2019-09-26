@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using ExchangeRateCalcX.API;
+using ExchangeRateCalcX.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using static ExchangeRateCalcX.API.Rootobject;
 
 namespace ExchangeRateCalcXTest
 {
@@ -15,7 +14,7 @@ namespace ExchangeRateCalcXTest
         {
             //Arrange
             APIService apiService = new APIService();
-            Rootobject rate = new Rootobject();
+            RateToken.Rootobject rate = new RateToken.Rootobject();
 
             //Act
             rate = await apiService.GetRate("ALL","XCD");
@@ -29,7 +28,7 @@ namespace ExchangeRateCalcXTest
         {
             //Arrange
             APIService apiService = new APIService();
-            Currency.Rootobject currency = new Currency.Rootobject();
+            CurrencyToken.Rootobject currency = new CurrencyToken.Rootobject();
 
             //Act
             currency = await apiService.GetListOfCurrenciesFromAPI();
