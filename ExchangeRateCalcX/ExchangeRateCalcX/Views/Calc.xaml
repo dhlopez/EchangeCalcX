@@ -2,12 +2,13 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ExchangeRateCalcX.Views.Calc"
+             xmlns:viewmodel="clr-namespace:ExchangeRateCalcX.ViewModel;assembly=ExchangeRateCalcX"
              Title="Calculation">
+    <ContentPage.BindingContext>
+        <viewmodel:CalcViewModel/>
+    </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout>
-            <!--<Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />-->
             <Grid BackgroundColor="#f8f4f1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="2*"></RowDefinition>
@@ -25,30 +26,32 @@
                     <ColumnDefinition Width="2*"></ColumnDefinition>
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <!--<Button Text="CUR1" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" Style="{StaticResource BlackBackground}"></Button>
-                <Button Text="CUR2" Grid.Column="3" Grid.Row="0" Grid.ColumnSpan="2" Style="{StaticResource BlackBackground}"></Button>
-                
-                
-                removed from picker ItemsSource = "{Binding fromCurrencies}"
-                -->
 
                 <Picker x:Name="FromCurrencyPick"
                     Title="From Currency"
                     Grid.Column="1" 
                     Grid.Row="0" 
                     Grid.ColumnSpan="2"
-                    SelectedIndexChanged="CurrencyPick_SelectedIndexChanged"
-                    ItemDisplayBinding="{Binding strCurrencyID}" />
+                    
+                    SelectedItem="{Binding SelectedFromCurrency}"
+                    ItemsSource="{Binding FromCurrencies}"
+                    ItemDisplayBinding="{Binding id}" 
+                    />
 
                 <Picker x:Name="ToCurrencyPick"
                     Title="To Currency"
                     Grid.Column="3" 
                     Grid.Row="0" 
                     Grid.ColumnSpan="2"
-                    SelectedIndexChanged="CurrencyPick_SelectedIndexChanged"
-                    ItemDisplayBinding="{Binding strCurrencyID}" />
+                    
+                    SelectedItem="{Binding SelectedToCurrency}"
+                    ItemsSource="{Binding ToCurrencies}"
+                    ItemDisplayBinding="{Binding id}" />
 
-                <Label Text="{Binding FromAmtValue}" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource DarkGreenBackground}"></Label>
+                <Label Text="{Binding CurrentSelectedRate}" x:Name="CurrentSelectedRate" 
+                       Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource DarkGreenBackground}"/>
+
+
                 <Label Text="R2" Grid.Column="3" Grid.Row="1" Grid.ColumnSpan="2" x:Name="ToAmt" Style="{StaticResource DarkGreenBackground}"></Label>
 
                 <Button Text="7" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Clicked="Button_Clicked" Style="{StaticResource LightGrayBackground}"></Button>

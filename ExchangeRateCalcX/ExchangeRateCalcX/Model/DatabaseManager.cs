@@ -14,7 +14,7 @@ namespace ExchangeRateCalcX.Model
 {
     public static class DatabaseManager
     {
-        public static SQLiteConnection dbConnection;
+        public static SQLiteAsyncConnection dbConnection;
         static DatabaseManager()
         {
             if (dbConnection == null)
@@ -23,7 +23,7 @@ namespace ExchangeRateCalcX.Model
             }
         }
 
-        public static SQLiteConnection GetConnection()
+        public static SQLiteAsyncConnection GetConnection()
         {
             if (dbConnection == null)
             {
@@ -32,74 +32,87 @@ namespace ExchangeRateCalcX.Model
             return dbConnection;
         }
  
-        public static List<Rate> GetAllRates()
+        public static async Task<List<Rate>> GetAllRates()
         {
-            return dbConnection.Query<Rate>("Select * From tblExchangeRates");
+            var query =  dbConnection.Table<Rate>();//("Select * From Rate");
+            var result = await query.ToListAsync();
+            return result;
         }
 
-        public static ObservableCollection<CurrencyToken.Rootobject> GetAllCurrencies()
+        public static async Task<ObservableCollection<Currency>> GetAllCurrencies()
         {
-            return new ObservableCollection<CurrencyToken.Rootobject>(dbConnection.Query<CurrencyToken.Rootobject>("Select * From tblCurrencies limit 10"));
+            var query = dbConnection.Table<Currency>();
+            var result = await query.ToListAsync();
+
+            return new ObservableCollection<Currency>(result as List<Currency>); ; //Query<CurrencyToken.Rootobject>("Select * From Currency limit 10"));
         }
 
-        public static List<CurrencyToken> DeleteAllCurrencies()
+        public static async void DeleteAllCurrencies()
         {
-            return dbConnection.Query<CurrencyToken>("Delete from tblCurrencies");
+            //return dbConnection.Query<CurrencyToken>("Delete from Currency");
+            await dbConnection.DeleteAllAsync<Currency>();
         }
 
-        public static int VerifyRecentRateOnDB(Rate newRate) {
+        public static async Task<int> VerifyRecentRateOnDB(Rate newRate) {
 
-            string rateFrom = newRate.from;
+            string rateFrom = newRate.fr;
             string rateTo = newRate.to;
 
-            var recentRate = dbConnection.Query<Rate>("SELECT EXISTS(Select * From tblExchangeRates where strRateFrom = \'" + rateFrom + "\' and strRateTo = \'" + rateTo + "\' and dtInserted < \'" + DateTime.Now.AddHours(-6) + "\')");
-            
-            return recentRate.Count;
+            var recentRate = dbConnection.Table<Rate>().Where(r => r.fr.Equals(rateFrom) && r.to.Equals(rateTo)).OrderByDescending(r=>r.dtInserted).Take(1);  //&& DateTime.Parse(r.dtInserted) < DateTime.Now.AddHours(-6)
+
+            var result = await recentRate.FirstOrDefaultAsync();
+
+            if (result == null)
+            {
+                return 0;
+            }
+
+            if (DateTime.Parse(result.dtInserted) < DateTime.Now.AddHours(-6) && DateTime.Parse(result.dtInserted) > DateTime.MinValue)
+            {
+                return 1;
+            }
+            return 0;
         }
 
-        public static List<Rate> VerifyRecentRateOnDB(string rateFrom, string rateTo) {
-
-            var recentRate = dbConnection.Query<Rate>("SELECT EXISTS(Select * From tblExchangeRates where strRateFrom = \'" + rateFrom + "\' and strRateTo = \'" + rateTo + "\' and dtInserted < \'" + DateTime.Now.AddHours(-6) + "\')");
-
-            return recentRate;
-        }
-
-        public static void InsertCurrency(Currency newCurrency)
+        public static async Task InsertCurrency(Currency newCurrency)
         {
-            dbConnection.Insert(newCurrency);
+            await dbConnection.InsertAsync(newCurrency);
         }
 
-        public static void InsertRate(Rate newRate)
+        public static async void InsertRate(Rate newRate)
         {
-            if (VerifyRecentRateOnDB(newRate)==0)
+            var rowsRetrieved = await VerifyRecentRateOnDB(newRate);
+
+            if (rowsRetrieved==0)
             {
                 //insert if there is no rate < 6 hrs old
-                dbConnection.Insert(newRate);
+                await dbConnection.InsertAsync(newRate);
             }
         }
               
-        public static List<Rate> ReadRate(string fromCurrency, string toCurrency)
+        public static async Task<List<Rate>> ReadRate(string fromCurrency, string toCurrency)
         {
-            return dbConnection.Query<Rate>("Select * From tblExchangeRates where strRateFrom = \'" + fromCurrency + "\' and strRateTo = \'" + toCurrency + "\' ORDER BY dtInserted desc limit 1");
+            var query = dbConnection.Table<Rate>().Where(r => r.fr.Equals(fromCurrency) && r.to.Equals(toCurrency)).OrderByDescending(r => r.dtInserted).Take(1); //.Query<Rate>("Select * From Rate where strRateFrom = \'" + fromCurrency + "\' and strRateTo = \'" + toCurrency + "\' ORDER BY dtInserted desc limit 1");
+
+            var result = await query.ToListAsync();
+
+            return result;
         }
 
-        public static bool VerifyIfListOfCurrenciesExists()
+        public static async Task<bool> VerifyIfListOfCurrenciesExists()
         {
             //Do a select to find if we have a list of rates
             bool exists = false;
 
-            Boolean.TryParse(dbConnection.Query<CurrencyToken>("SELECT EXISTS(Select * From tblCurrencies)").ToString(), out exists);
+            var query = dbConnection.Table<Currency>();
+
+            var result = await query.ToListAsync();
+
+            if (result.Count == 1)
+                exists = true;
 
             return exists;
 
-        }
-
-
-        public static void Read() {
-	        var query = dbConnection.Table<Rate>();
-
-            foreach (var tblExchangeRates in query)
-	            Console.WriteLine("Stock: " + tblExchangeRates.from);
         }
     }
 }

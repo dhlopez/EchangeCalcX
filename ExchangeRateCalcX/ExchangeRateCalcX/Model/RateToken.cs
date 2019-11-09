@@ -27,17 +27,12 @@ namespace ExchangeRateCalcX.Model
 
         public class Rate
         {
-            //public string id { get; set; }
-            //public string fr { get; set; }
-            //public string to { get; set; }
-            //public float val { get; set; }
-            public int? id { get; set; }
-
-            public string from { get; set; }
+            public string id { get; set; }
 
             public double val { get; set; }
-
             public string to { get; set; }
+
+            public string fr { get; set; }
 
             public string dtInserted { get; set; }
                 

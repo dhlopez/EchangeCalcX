@@ -11,7 +11,7 @@
 
 [assembly: global::Android.Runtime.ResourceDesignerAttribute("ExchangeRateCalcX.Droid.Resource", IsApplication=true)]
 
-namespace ExchangeRateCalcXModel.Droid
+namespace ExchangeRateCalcX.Droid
 {
 	
 	
@@ -26,7 +26,7 @@ namespace ExchangeRateCalcXModel.Droid
 		
 		public static void UpdateIdValues()
 		{
-			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::ExchangeRateCalcXModel.Droid.Resource.Attribute.actionBarSize;
+			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::ExchangeRateCalcX.Droid.Resource.Attribute.actionBarSize;
 		}
 		
 		public partial class Animation

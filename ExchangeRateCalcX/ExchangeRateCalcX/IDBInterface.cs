@@ -7,6 +7,6 @@ namespace ExchangeRateCalcX
 {
     public interface IDBInterface
     {
-        SQLiteConnection CreateConnection();
+        SQLiteAsyncConnection CreateConnection();
     }
 }

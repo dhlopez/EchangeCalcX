@@ -23,7 +23,7 @@ namespace ExchangeRateCalcX.Droid
         {
         }
 
-        public SQLiteConnection CreateConnection()
+        public SQLiteAsyncConnection CreateConnection()
         {
             var sqliteFilename = "rates.db";
             string documentsDirectoryPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
@@ -46,7 +46,7 @@ namespace ExchangeRateCalcX.Droid
                 }
             }
             //var plat = new SQLite.Platform.XamarinAndroid.SQLitePlatformAndroid();
-            var conn = new SQLite.SQLiteConnection(path, false);
+            var conn = new SQLite.SQLiteAsyncConnection(path, false); 
 
             return conn;
         }

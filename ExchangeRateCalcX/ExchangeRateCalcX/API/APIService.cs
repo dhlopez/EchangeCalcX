@@ -1,4 +1,5 @@
 ﻿using ExchangeRateCalcX.Model;
+using ExchangeRateCalcX.ViewModel;
 using ExchangeRateCalcX.Views;
 using Newtonsoft.Json;
 using System.Net.Http;
@@ -21,7 +22,7 @@ namespace ExchangeRateCalcX.Model
         private readonly HttpClient _client = new HttpClient(); //Creating a new instance of HttpClient. (Microsoft.Net.Http)
         public RateToken.Rootobject rateToken;
         public CurrencyToken.Rootobject currencyToken;
-        RateModelView currentRateBreakdown;
+        CalcViewModel currentRateBreakdown;
 
         public APIService()
         {
