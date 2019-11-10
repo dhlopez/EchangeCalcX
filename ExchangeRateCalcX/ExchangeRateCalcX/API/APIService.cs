@@ -10,7 +10,7 @@ namespace ExchangeRateCalcX.Model
 {
     public class APIService
     {
-        StringBuilder urlRate = new StringBuilder();
+        StringBuilder urlRate;
         StringBuilder urlCurList = new StringBuilder();
         StringBuilder urlSite = new StringBuilder();
         StringBuilder urlKey = new StringBuilder();
@@ -34,6 +34,7 @@ namespace ExchangeRateCalcX.Model
 
         public async Task<RateToken.Rootobject> GetRate(string fromCurrency, string toCurrency)
         {
+            urlRate = new StringBuilder();
             urlRate.AppendFormat("{0}{1}{2}_{3},{3}_{2}&{4}", urlSite, urlConvert, fromCurrency, toCurrency, urlKey);
             string response =  await _client.GetStringAsync(urlRate.ToString());
 

@@ -50,15 +50,6 @@ namespace ExchangeRateCalcX.Views
             List<Rate> rates = await DatabaseManager.GetAllRates();
         }
 
-        //private async void CurrencyPick_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-            //selectedFromCurrency = FromCurrencyPick.SelectedItem as Currency;
-            //selectedToCurrency = ToCurrencyPick.SelectedItem as Currency;
-            
-            //await rateModelView.HandleDifferentCurrencySelection(apiService, selectedFromCurrency, selectedToCurrency);
-            
-        //}
-
         private void Button_Clicked_1(object sender, EventArgs e)
         {            
             DisplayAlert("Alert", "Insert variable for testing here" + this.Id/*rateModelView.CurrentSelectedRate*/, "OK");            

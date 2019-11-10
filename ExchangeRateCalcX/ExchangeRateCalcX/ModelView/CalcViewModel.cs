@@ -157,14 +157,22 @@ namespace ExchangeRateCalcX.ViewModel
 
                         if (rateApi != null)
                         {
-                            MapRatesForInsert(rateApi);
+                            if(rateApi.results != null)
+                                MapRatesForInsert(rateApi);
                         }
 
-                        var a = rateApi.results.rateList.Where(r => r.Key == (SelectedFromCurrency.id.ToString() + "_" + SelectedToCurrency.id.ToString())).ToList();
-                        var b = a.ToList().FirstOrDefault().Value.ToString();
-                        rate = JsonConvert.DeserializeObject<Rate>(b);
+                        try
+                        {
+                            var a = rateApi.results.rateList.Where(r => r.Key == (SelectedFromCurrency.id.ToString() + "_" + SelectedToCurrency.id.ToString())).ToList();
+                            var b = a.FirstOrDefault().Value.ToString();
+                            rate = JsonConvert.DeserializeObject<Rate>(b);
 
-                        rate = MapApiTokenToRate(rate);
+                            rate = MapApiTokenToRate(rate);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
                     }
                 }
             }
