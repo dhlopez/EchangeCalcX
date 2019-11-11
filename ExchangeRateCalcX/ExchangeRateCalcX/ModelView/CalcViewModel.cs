@@ -8,6 +8,8 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Xamarin.Forms;
 using static ExchangeRateCalcX.Model.CurrencyToken;
 using static ExchangeRateCalcX.Model.RateToken;
 
@@ -16,16 +18,14 @@ namespace ExchangeRateCalcX.ViewModel
     public class CalcViewModel : INotifyPropertyChanged
     {
         double currentSelectedRate;
-
-        private Currency selectedFromCurrency;
-        private Currency selectedToCurrency;
-
         APIService apiService;
-        //CalcViewModel rateModelView;
 
         public ObservableCollection<Currency> FromCurrencies { get; set; }
         public ObservableCollection<Currency> ToCurrencies { get; set; }
 
+        private Currency selectedFromCurrency;
+        private Currency selectedToCurrency;
+               
         public Currency SelectedFromCurrency
         {
             get
@@ -66,16 +66,48 @@ namespace ExchangeRateCalcX.ViewModel
             }
         }
 
+        private double curFrom;
+
+        private double curTo;
+        public double CurFrom
+        {
+            get { return curFrom; }
+            set
+            {
+               curFrom = value;
+               NotifyPropertyChanged();               
+            }
+        }
+
+        public double CurTo
+        {
+            get { return curTo; }
+            set
+            {
+                curTo = value;
+                NotifyPropertyChanged();
+            }
+        }
+
         //public APIService apiService;
 
         public CalcViewModel()
         {
             DatabaseManager.DeleteAllCurrencies();
+            CurFrom = 0;
+            CurTo = 0;
             SelectedFromCurrency = new Currency();
             SelectedToCurrency = new Currency();
             FromCurrencies = new ObservableCollection<Currency>();
             ToCurrencies = new ObservableCollection<Currency>();
             apiService = new APIService();
+
+            ButtonNumberClickHandler = new Command<string>((value) =>
+            {
+                var a = value;
+            });
+
+
             Start();   
         }
 
@@ -92,7 +124,7 @@ namespace ExchangeRateCalcX.ViewModel
             {
                 ToCurrencies.Add(item);
             }
-
+            
         }
 
         public double CurrentSelectedRate
@@ -220,5 +252,7 @@ namespace ExchangeRateCalcX.ViewModel
         {
             return await DatabaseManager.GetAllCurrencies();
         }
+
+        public ICommand ButtonNumberClickHandler { private set; get; }
     }
 }
