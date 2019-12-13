@@ -29,11 +29,11 @@ namespace ExchangeRateCalcX.Views
             //listOfCurrencies = currencyModelView.GetTblCurrencies(); 
         }
 
-        private void Button_Clicked(object sender, EventArgs e)
-        {
-            var button = (Button)sender;
-            //FromAmtValue = button.Text;
-        }
+        //private void Button_Clicked(object sender, EventArgs e)
+        //{
+        //    var button = (Button)sender;
+        //    //FromAmtValue = button.Text;
+        //}
 
         private void Clear_Clicked(object sender, EventArgs e)
         {

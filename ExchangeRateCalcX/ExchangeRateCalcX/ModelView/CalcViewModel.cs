@@ -1,4 +1,5 @@
-﻿using ExchangeRateCalcX.Model;
+﻿using ExchangeRateCalcX.Calculator;
+using ExchangeRateCalcX.Model;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,8 @@ namespace ExchangeRateCalcX.ViewModel
     {
         double currentSelectedRate;
         APIService apiService;
-
+        ICalculator Calculator;
+        
         public ObservableCollection<Currency> FromCurrencies { get; set; }
         public ObservableCollection<Currency> ToCurrencies { get; set; }
 
@@ -66,10 +68,10 @@ namespace ExchangeRateCalcX.ViewModel
             }
         }
 
-        private double curFrom;
+        private string curFrom;
 
-        private double curTo;
-        public double CurFrom
+        private string curTo;
+        public string CurFrom
         {
             get { return curFrom; }
             set
@@ -79,7 +81,7 @@ namespace ExchangeRateCalcX.ViewModel
             }
         }
 
-        public double CurTo
+        public string CurTo
         {
             get { return curTo; }
             set
@@ -91,24 +93,24 @@ namespace ExchangeRateCalcX.ViewModel
 
         //public APIService apiService;
 
-        public CalcViewModel()
+        public CalcViewModel(/*ICalculator calculator*/)
         {
             DatabaseManager.DeleteAllCurrencies();
-            CurFrom = 0;
-            CurTo = 0;
+            //Calculator = calculator;
+            CurFrom = "0";
+            CurTo = "0";
             SelectedFromCurrency = new Currency();
             SelectedToCurrency = new Currency();
             FromCurrencies = new ObservableCollection<Currency>();
             ToCurrencies = new ObservableCollection<Currency>();
             apiService = new APIService();
 
+            Start();
+
             ButtonNumberClickHandler = new Command<string>((value) =>
             {
                 var a = value;
             });
-
-
-            Start();   
         }
 
         public async void  Start()

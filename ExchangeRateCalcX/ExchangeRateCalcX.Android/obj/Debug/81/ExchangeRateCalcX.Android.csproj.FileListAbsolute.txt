@@ -1,12 +1,12 @@
+D:\Practice\Xamarin\ExchangeRateCalcX\ExchangeRateCalcX\ExchangeRateCalcX.Android\obj\Debug\81\MonoAndroid,Version=v8.1.AssemblyAttributes.cs
+D:\Practice\Xamarin\ExchangeRateCalcX\ExchangeRateCalcX\ExchangeRateCalcX.Android\obj\Debug\81\ExchangeRateCalcX.Android.nuget.stamp
+D:\Practice\Xamarin\ExchangeRateCalcX\ExchangeRateCalcX\ExchangeRateCalcX.Android\obj\Debug\81\ExchangeRateCalcX.Android.csprojAssemblyReference.cache
 D:\Practice\Xamarin\ExchangeRateCalcX\ExchangeRateCalcX\ExchangeRateCalcX.Android\bin\Debug\ExchangeRateCalcX.Android.dll
 D:\Practice\Xamarin\ExchangeRateCalcX\ExchangeRateCalcX\ExchangeRateCalcX.Android\bin\Debug\ExchangeRateCalcX.Android.pdb
 D:\Practice\Xamarin\ExchangeRateCalcX\ExchangeRateCalcX\ExchangeRateCalcX.Android\bin\Debug\com.companyname.apk
 D:\Practice\Xamarin\ExchangeRateCalcX\ExchangeRateCalcX\ExchangeRateCalcX.Android\bin\Debug\com.companyname-Signed.apk
 D:\Practice\Xamarin\ExchangeRateCalcX\ExchangeRateCalcX\ExchangeRateCalcX.Android\bin\Debug\ExchangeRateCalcX.dll
 D:\Practice\Xamarin\ExchangeRateCalcX\ExchangeRateCalcX\ExchangeRateCalcX.Android\bin\Debug\ExchangeRateCalcX.pdb
-D:\Practice\Xamarin\ExchangeRateCalcX\ExchangeRateCalcX\ExchangeRateCalcX.Android\obj\Debug\81\MonoAndroid,Version=v8.1.AssemblyAttributes.cs
-D:\Practice\Xamarin\ExchangeRateCalcX\ExchangeRateCalcX\ExchangeRateCalcX.Android\obj\Debug\81\ExchangeRateCalcX.Android.nuget.stamp
-D:\Practice\Xamarin\ExchangeRateCalcX\ExchangeRateCalcX\ExchangeRateCalcX.Android\obj\Debug\81\ExchangeRateCalcX.Android.csprojAssemblyReference.cache
 D:\Practice\Xamarin\ExchangeRateCalcX\ExchangeRateCalcX\ExchangeRateCalcX.Android\obj\Debug\81\libraryimports.cache.stamp
 D:\Practice\Xamarin\ExchangeRateCalcX\ExchangeRateCalcX\ExchangeRateCalcX.Android\obj\Debug\81\res.flag
 D:\Practice\Xamarin\ExchangeRateCalcX\ExchangeRateCalcX\ExchangeRateCalcX.Android\obj\Debug\81\ExchangeRateCalcX.Android.csproj.CoreCompileInputs.cache

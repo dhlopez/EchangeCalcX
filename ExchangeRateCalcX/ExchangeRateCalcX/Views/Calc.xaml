@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ExchangeRateCalcX.Views.Calc"
-             xmlns:viewmodel="clr-namespace:ExchangeRateCalcX.ViewModel;assembly=ExchangeRateCalcX"
+             xmlns:viewmodel="clr-namespace:ExchangeRateCalcX.ViewModel"
              Title="Calculation">
     <ContentPage.BindingContext>
         <viewmodel:CalcViewModel/>
@@ -57,22 +57,32 @@
                        Grid.Column="3" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource DarkGreenBackground}"/>
 
                 <Button Text="7" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" 
-                            Command="{Binding ButtonNumberClickHandler}" CommandParameter="7" Clicked="Button_Clicked" Style="{StaticResource LightGrayBackground}"></Button>
-                <Button Text="8" Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="1" Clicked="Button_Clicked" Style="{StaticResource LightGrayBackground}"></Button>
-                <Button Text="9" Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="1" Clicked="Button_Clicked" Style="{StaticResource LightGrayBackground}"></Button>
+                            Command="{Binding ButtonNumberClickHandler}" CommandParameter="7" Style="{StaticResource LightGrayBackground}"></Button>
+                <Button Text="8" Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="1" 
+                            Command="{Binding ButtonNumberClickHandler}" CommandParameter="8" Style="{StaticResource LightGrayBackground}"></Button>
+                <Button Text="9" Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="1"  
+                            Command="{Binding ButtonNumberClickHandler}" CommandParameter="9" Style="{StaticResource LightGrayBackground}"></Button>
+                
                 <Button x:Name="Clear" Text="C" Grid.Column="4" Grid.Row="2" Grid.ColumnSpan="1" Grid.RowSpan="2" Clicked="Clear_Clicked" Style="{StaticResource OrangeBackground}"></Button>
 
-                <Button Text="4" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" Clicked="Button_Clicked" Style="{StaticResource LightGrayBackground}"></Button>
-                <Button Text="5" Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="1" Clicked="Button_Clicked" Style="{StaticResource LightGrayBackground}"></Button>
-                <Button Text="6" Grid.Column="3" Grid.Row="3" Grid.ColumnSpan="1" Clicked="Button_Clicked" Style="{StaticResource LightGrayBackground}"></Button>
+                <Button Text="4" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" 
+                            Command="{Binding ButtonNumberClickHandler}" CommandParameter="4" Style="{StaticResource LightGrayBackground}"></Button>
+                <Button Text="5" Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="1" 
+                            Command="{Binding ButtonNumberClickHandler}" CommandParameter="5" Style="{StaticResource LightGrayBackground}"></Button>
+                <Button Text="6" Grid.Column="3" Grid.Row="3" Grid.ColumnSpan="1" 
+                            Command="{Binding ButtonNumberClickHandler}" CommandParameter="6" Style="{StaticResource LightGrayBackground}"></Button>
 
-                <Button Text="1" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="1" Clicked="Button_Clicked" Style="{StaticResource LightGrayBackground}"></Button>
-                <Button Text="2" Grid.Column="2" Grid.Row="4" Grid.ColumnSpan="1" Clicked="Button_Clicked" Style="{StaticResource LightGrayBackground}"></Button>
-                <Button Text="3" Grid.Column="3" Grid.Row="4" Grid.ColumnSpan="1" Clicked="Button_Clicked" Style="{StaticResource LightGrayBackground}"></Button>
+                <Button Text="1" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="1" 
+                         Command="{Binding ButtonNumberClickHandler}" CommandParameter="1" Style="{StaticResource LightGrayBackground}"></Button>
+                <Button Text="2" Grid.Column="2" Grid.Row="4" Grid.ColumnSpan="1" 
+                         Command="{Binding ButtonNumberClickHandler}" CommandParameter="2" Style="{StaticResource LightGrayBackground}"></Button>
+                <Button Text="3" Grid.Column="3" Grid.Row="4" Grid.ColumnSpan="1" 
+                         Command="{Binding ButtonNumberClickHandler}" CommandParameter="3" Style="{StaticResource LightGrayBackground}"></Button>
                 <Button Text="=" Grid.Column="4" Grid.Row="4" Grid.ColumnSpan="1" Grid.RowSpan="2" Style="{StaticResource LightGreenBackground}"></Button>
 
                 <Button Text="S1" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="1" x:Name="Insert" Clicked="Insert_Clicked"></Button>
-                <Button Text="0" Grid.Column="2" Grid.Row="5" Grid.ColumnSpan="1" Clicked="Button_Clicked"  Style="{StaticResource LightGrayBackground}"></Button>
+                <Button Text="0" Grid.Column="2" Grid.Row="5" Grid.ColumnSpan="1" 
+                         Command="{Binding ButtonNumberClickHandler}" CommandParameter="0" Style="{StaticResource LightGrayBackground}"></Button>
                 <Button Text="S2" Grid.Column="3" Grid.Row="5" Grid.ColumnSpan="1" Clicked="Select_Clicked"></Button>
 
                 <Button Text="1" Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="4" Clicked="Button_Clicked_1"></Button>
